@@ -4,7 +4,9 @@ pragma experimental ABIEncoderV2;
 import "./IERC721.sol";
 import "./IERC721Receiver.sol";
 import "./Receipt.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 contract NFT is IERC721, Receipt {
+    using SafeMath for uint256;
     //Name and ticker symbol subject to change, just for Demo
     string public override constant name = "Farm Bit Collateral Protocol";
     string public override constant symbol = "FBCP";
@@ -195,7 +197,7 @@ contract NFT is IERC721, Receipt {
 
     function calculateFee(uint amount) external pure returns(uint) {
         //100 basis points = 1 pct
-        return (amount /10000) * 100;
+        return (amount /10000).mul(100);
     }
 
 }
