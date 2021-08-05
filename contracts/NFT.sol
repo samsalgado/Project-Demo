@@ -5,6 +5,7 @@ import "./IERC721.sol";
 import "./IERC721Receiver.sol";
 import "./Receipt.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "./LegalFramework.sol";
 contract NFT is IERC721, Receipt {
     using SafeMath for uint256;
     //Name and ticker symbol subject to change, just for Demo
@@ -120,9 +121,11 @@ contract NFT is IERC721, Receipt {
         emit ApprovalForAll(msg.sender, operator, _approved);
 
     }
+    //Front End function in which Collateral Manager: approves, appraises, and documents asset
     function _setApprovalForAll(address _operator, bool _approved) internal{
         _collateralManagerApproval[msg.sender][_operator] = _approved;
     }
+    //Assets must be in warehouse
     function getApproved(uint256 _tokenId) external view override returns (address){
         require(_tokenId < Loans.length);
         return loanIndexToApproved[_tokenId];
